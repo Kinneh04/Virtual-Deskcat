@@ -46,6 +46,9 @@ public class CatScript : MonoBehaviour
     [Header("Keywords")]
     public string[] HelloKeywords;
     public string[] JokeKeywords;
+
+    [Header("DrawingBoard")]
+    public Texture2D GeneratedImage;
     bool CheckKeywords(string inputString, string[] keywords)
     {
         return keywords.Any(keyword => inputString.Contains(keyword.ToLower()));
@@ -66,16 +69,30 @@ public class CatScript : MonoBehaviour
         //        PopUpSpeech(chooseRandomFrom(RandomTextsHello));
         //    }
         //}
-        HuggingFace.API.Conversation conversation = new HuggingFace.API.Conversation();
-        conversation.AddUserInput("You are a white domestic shorthair cat named muffin. Roleplay as the cat, and I will speak to you as the owner. You will end each response with Meow");
-        conversation.AddGeneratedResponse("Ok Meow. My name is muffin, and I am a cat, and you are my new owner");
-        HuggingFaceAPI.Conversation(spoken, response =>
+
+        if (spoken.Contains("Image") && spoken.Contains("Generate"))
         {
-            PopUpSpeech(response);
-        }, error =>
+            HuggingFaceAPI.TextToImage(spoken, response =>
+            {
+                GeneratedImage = response;
+            }, error =>
+            {
+                PopUpSpeech("Sorry I was being silly. Can you repeat that please?");
+            });
+        }
+        else
         {
-            PopUpSpeech("Uh, what?");
-        }, context: conversation);
+            HuggingFace.API.Conversation conversation = new HuggingFace.API.Conversation();
+            conversation.AddUserInput("You are a white domestic shorthair cat named muffin. Roleplay as the cat, and I will speak to you as the owner. You will end each response with 'Meow'");
+            conversation.AddGeneratedResponse("Ok Meow. My name is muffin, and I am a cat, and you are my new owner");
+            HuggingFaceAPI.Conversation(spoken, response =>
+            {
+                PopUpSpeech(response);
+            }, error =>
+            {
+                PopUpSpeech("Uh, what?");
+            }, context: conversation);
+        }
     }
 
 
