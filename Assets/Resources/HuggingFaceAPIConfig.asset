@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: HuggingFaceAPIConfig
   m_EditorClassIdentifier: 
   _apiKey: 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
-  _useBackupEndpoints: 1
+  _useBackupEndpoints: 0
   _waitForModel: 1
-  _maxTimeout: 3
+  _maxTimeout: 35
   _taskEndpoints:
   - taskName: AutomaticSpeechRecognition
     endpoint: https://api-inference.huggingface.co/models/openai/whisper-tiny

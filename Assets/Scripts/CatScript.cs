@@ -46,9 +46,13 @@ public class CatScript : MonoBehaviour
     [Header("Keywords")]
     public string[] HelloKeywords;
     public string[] JokeKeywords;
+    public GameObject ProcessingSpeech;
+    
 
     [Header("DrawingBoard")]
     public Texture2D GeneratedImage;
+    public GameObject TextureOutputImage;
+    public Transform Ccanvas;
     bool CheckKeywords(string inputString, string[] keywords)
     {
         return keywords.Any(keyword => inputString.Contains(keyword.ToLower()));
@@ -59,9 +63,21 @@ public class CatScript : MonoBehaviour
         return (choices[Random.Range(0, choices.Count)]);
     }
 
+    public void GenerateImage()
+    {
+        GameObject GO = Instantiate(TextureOutputImage);
+        TextureOutput TO = GO.GetComponent<TextureOutput>();
+        TO.texture = GeneratedImage;
+        TO.image.texture = TO.texture;
+        GO.transform.SetParent(Ccanvas, true);
+        GO.transform.position = new Vector3(0, 0, 0);
+    }
+
     public void CatProcessSpeech(string spoken)
     {
-        //spoken = spoken.ToLower();
+        ProcessingSpeech.SetActive(true);
+        
+        spoken = spoken.ToLower();
         //if(spoken.Contains(Name))
         //{
         //    if(CheckKeywords(spoken, HelloKeywords))
@@ -70,27 +86,33 @@ public class CatScript : MonoBehaviour
         //    }
         //}
 
-        if (spoken.Contains("Image") && spoken.Contains("Generate"))
+        if (spoken.Contains("image") && spoken.Contains("generate") || spoken.Contains("image") || spoken.Contains("picture"))
         {
             HuggingFaceAPI.TextToImage(spoken, response =>
             {
                 GeneratedImage = response;
+                GenerateImage();
+                ProcessingSpeech.SetActive(false);
+                PopUpSpeech("Here is your image meow!");
             }, error =>
             {
                 PopUpSpeech("Sorry I was being silly. Can you repeat that please?");
+                ProcessingSpeech.SetActive(false);
             });
         }
         else
         {
             HuggingFace.API.Conversation conversation = new HuggingFace.API.Conversation();
-            conversation.AddUserInput("You are a white domestic shorthair cat named muffin. Roleplay as the cat, and I will speak to you as the owner. You will end each response with 'Meow'");
+            conversation.AddUserInput("You are a cat named muffin. Do you understand?");
             conversation.AddGeneratedResponse("Ok Meow. My name is muffin, and I am a cat, and you are my new owner");
             HuggingFaceAPI.Conversation(spoken, response =>
             {
                 PopUpSpeech(response);
+                ProcessingSpeech.SetActive(false);
             }, error =>
             {
                 PopUpSpeech("Uh, what?");
+                ProcessingSpeech.SetActive(false);
             }, context: conversation);
         }
     }
