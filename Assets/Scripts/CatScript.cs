@@ -1,4 +1,5 @@
 using CodeMonkey.Utils;
+using HuggingFace.API;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,15 +58,27 @@ public class CatScript : MonoBehaviour
 
     public void CatProcessSpeech(string spoken)
     {
-        spoken = spoken.ToLower();
-        if(spoken.Contains(Name))
+        //spoken = spoken.ToLower();
+        //if(spoken.Contains(Name))
+        //{
+        //    if(CheckKeywords(spoken, HelloKeywords))
+        //    {
+        //        PopUpSpeech(chooseRandomFrom(RandomTextsHello));
+        //    }
+        //}
+        HuggingFace.API.Conversation conversation = new HuggingFace.API.Conversation();
+        conversation.AddUserInput("You are a white domestic shorthair cat named muffin. Roleplay as the cat, and I will speak to you as the owner. You will end each response with Meow");
+        conversation.AddGeneratedResponse("Ok Meow. My name is muffin, and I am a cat, and you are my new owner");
+        HuggingFaceAPI.Conversation(spoken, response =>
         {
-            if(CheckKeywords(spoken, HelloKeywords))
-            {
-                PopUpSpeech(chooseRandomFrom(RandomTextsHello));
-            }
-        }
+            PopUpSpeech(response);
+        }, error =>
+        {
+            PopUpSpeech("Uh, what?");
+        }, context: conversation);
     }
+
+
 
 
     public void PopUpSpeech(string speech, float duration = 4.0f)
@@ -108,22 +121,22 @@ public class CatScript : MonoBehaviour
     private void Update()
     {
 
-        if(speechtimer > 0)
+        if (speechtimer > 0 && !PopupBox.activeSelf)
         {
             speechtimer -= Time.deltaTime;
-            if(speechtimer <= 0)
+            if (speechtimer <= 0)
             {
                 speechtimer = Random.Range(minText, maxText);
-                if(isSleeping)
+                if (isSleeping)
                 {
                     PopUpSpeech(RandomTextsSleeping[Random.Range(0, RandomTexts.Count)]);
                 }
                 else
-                 PopUpSpeech(RandomTexts[Random.Range(0, RandomTexts.Count)]);
+                    PopUpSpeech(RandomTexts[Random.Range(0, RandomTexts.Count)]);
             }
         }
 
-        if(PopupBox.activeSelf)
+        if (PopupBox.activeSelf)
         {
             lastsForTime -= Time.deltaTime;
             if (lastsForTime <= 0) PopupBox.SetActive(false);
@@ -142,7 +155,7 @@ public class CatScript : MonoBehaviour
 
         if (hit.collider == null)
         {
-          //  Debug.Log("Sprite is in the air!");
+            //  Debug.Log("Sprite is in the air!");
             CatAnimator.SetBool("isFalling", true);
         }
         else
@@ -154,33 +167,33 @@ public class CatScript : MonoBehaviour
             else idleTimer = 0;
         }
 
-        if(timer > 0)
+        if (timer > 0)
         {
             timer -= Time.deltaTime;
-            if(timer <= 0 && !isDragging && !isSleeping)
+            if (timer <= 0 && !isDragging && !isSleeping)
             {
                 CatAnimator.Play(CatIdleAnimClips[Random.Range(0, CatIdleAnimClips.Length)].name);
                 timer = Random.Range(minIdleAnim, maxIdleAnim);
             }
         }
 
-        if(idleTimer > 5f && !isSleeping )
+        if (idleTimer > 5f && !isSleeping)
         {
             isSleeping = true;
             CatAnimator.SetBool("isSleeping", true);
             sleepTimer = 10.0f;
             idleTimer = 0.0f;
         }
-        else if(isSleeping)
+        else if (isSleeping)
         {
             sleepTimer -= Time.deltaTime;
-            if(sleepTimer <= 0)
+            if (sleepTimer <= 0)
             {
                 CatAnimator.SetBool("isSleeping", false);
                 isSleeping = false;
             }
         }
-       
+
         //if (Input.GetMouseButtonDown(1))
         //{
         //    // Create a ray from the mouse position

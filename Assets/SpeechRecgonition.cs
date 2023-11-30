@@ -20,16 +20,19 @@ public class SpeechRecgonition : MonoBehaviour
     [Header("Speech")]
     private AudioClip clip;
     private byte[] bytes;
+
+    [Header("Cat")]
+    public CatScript cat;
     public void PushSpeakButton()
     {
-        if(!isSpeaking)
+        if (!isSpeaking)
         {
             StartRecording();
             SpeakResultText.text = "Listening...";
         }
         else
         {
-         
+
             StopRecording();
             SpeakResultText.text = "Processing...";
         }
@@ -43,7 +46,7 @@ public class SpeechRecgonition : MonoBehaviour
 
     private void Update()
     {
-        if(isSpeaking && Microphone.GetPosition(null) >= clip.samples)
+        if (isSpeaking && Microphone.GetPosition(null) >= clip.samples)
         {
             StopRecording();
         }
@@ -93,9 +96,11 @@ public class SpeechRecgonition : MonoBehaviour
         HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response =>
         {
             SpeakResultText.text = response;
+            cat.CatProcessSpeech(response);
         }, error =>
         {
             SpeakResultText.text = "error: " + error;
         });
     }
+
 }

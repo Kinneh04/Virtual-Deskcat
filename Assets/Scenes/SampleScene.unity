@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ad4515d6dce9146abc86c6c548f898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.1
+  delay: 0.03
   Textbox: {fileID: 229871596}
 --- !u!1 &229871594
 GameObject:
@@ -1423,6 +1423,7 @@ MonoBehaviour:
   SpeakButton: {fileID: 42917669}
   isSpeaking: 0
   SpeakResultText: {fileID: 1646840347}
+  cat: {fileID: 947078214}
 --- !u!1 &1053447077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1688,8 +1689,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -469.6, y: -418.62}
-  m_SizeDelta: {x: -1640.579, y: -1027.6084}
+  m_AnchoredPosition: {x: -202.58044, y: -418.62}
+  m_SizeDelta: {x: -1106.5398, y: -1027.6084}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1646840347
 MonoBehaviour:
