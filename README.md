@@ -16,7 +16,7 @@ Or you could just download from releases. :)
 
 ## Features
 1. Talk to VD by speaking into the microphone
-2. Ask VD to generate images by saying stuff like "Generate ____" or "I want a picture of ____" or "You know what would be nice? an image of a ____"
+2. Ask VD to generate images by saying stuff like "I want a picture of ____" or "You know what would be nice? an image of a ____"
 
  ## How VD utilizes Machine Learning Technology
  VD has 3 primary ML Models:
