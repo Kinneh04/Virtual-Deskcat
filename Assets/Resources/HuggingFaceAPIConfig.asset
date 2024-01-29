@@ -20,7 +20,7 @@ MonoBehaviour:
   - taskName: AutomaticSpeechRecognition
     endpoint: https://api-inference.huggingface.co/models/openai/whisper-tiny
   - taskName: Conversation
-    endpoint: https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill
+    endpoint: https://api-inference.huggingface.co/models/AI-Sweden-Models/gpt-sw3-1.3b
   - taskName: QuestionAnswering
     endpoint: https://api-inference.huggingface.co/models/deepset/roberta-base-squad2
   - taskName: SentenceSimilarity
