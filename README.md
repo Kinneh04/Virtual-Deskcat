@@ -2,7 +2,7 @@
  Your feline virtual desktop companion that you can talk to.
  Software used: Unity2D
 
- #⚠️Disclaimer
+ # Disclaimer⚠️
  The project is still under development and contains a myriad of bugs. Currently all features listed in the readme below has already been implemented to a working extent.
 
  # About
