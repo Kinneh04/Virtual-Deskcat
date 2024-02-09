@@ -15,8 +15,10 @@ Just pull the project, open in Unity3D, and build. Open the exe and you should b
 Or you could just download from releases. :)
 
 ## Features
-1. Talk to VD by speaking into the microphone
-2. Ask VD to generate images by saying stuff like "I want a picture of ____" or "You know what would be nice? an image of a ____"
+1. VD is a virtual assistant, meaning it will stay in a corner of your computer, not disturbing you until you ask it something
+2. It will occasionally speak its mind, or "go to sleep" when it is bored or when the user hasnt interacted with it for long enough.
+3. Talk to VD by speaking into the microphone
+4. Ask VD to generate images by saying stuff like "I want a picture of ____" or "You know what would be nice? an image of a ____"
 
  ## How VD utilizes Machine Learning Technology
  VD has 3 primary ML Models:
